@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView
+from django.views.generic import CreateView
 from .models import Post
 # Create your views here.
 
@@ -14,3 +15,9 @@ class PostDetailView(DetailView):
     template_name = "feed/detail.html"
     model = Post
     context_object_name = "post"
+
+class CreateNewPost(CreateView):
+    model = Post
+    template_name = "feed/create.html"
+    fields = ['text']
+
