@@ -33,5 +33,16 @@ $(document).on("click", ".js-toggle-modal", function(e){
     e.preventDefault();
     console.log("Hello, I was clicked");
     $(".js-modal").toggleClass("hidden");
-}
-)
+})
+.on("click", ".js-submit", function(e){
+    e.preventDefault()
+    console.log("Submit!")
+    const text = $(".js-posttext").val().trim()
+
+    if(!text.length)
+    {
+        return false;
+    }
+
+    $(".js-modal").toggleClass("hidden");
+})
