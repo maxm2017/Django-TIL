@@ -38,11 +38,35 @@ $(document).on("click", ".js-toggle-modal", function(e){
     e.preventDefault()
     console.log("Submit!")
     const text = $(".js-posttext").val().trim()
+    const $btn = $(this)
 
     if(!text.length)
     {
         return false;
     }
 
-    $(".js-modal").toggleClass("hidden");
+    //$(".js-modal").toggleClass("hidden");
+    //$(".js-posttext").val('');
+
+    $btn.prop("disabled", true).text("Posting!")
+    $.ajax({
+            type: 'POST',
+            url:$(".js-posttext").data("post-url"),
+            data:{
+                text:text
+            },
+            success: (dataHtml) => {
+                $(".js-modal").addClass("hidden");
+                $("#posts-container").prepend(dataHtml);
+                $btn.prop("disabled", false).text("New Post");
+                $("js-postext").val('');
+            },
+            error: (error) => {
+                console.warn(error);
+                $btn.prop("disabled", false).text("Error");
+            }
+
+            }
+
+        )
 })

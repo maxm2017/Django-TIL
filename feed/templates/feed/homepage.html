@@ -4,12 +4,12 @@
 {%block title%}Home Page{%endblock%}
 
 {%block body%} 
+    <div id = "posts-container">
+        {%for post in posts%}
+            {{post.text}} - {{post.date}} </br> <hr>
 
-{%for post in posts%}
-    {{post.text}} - {{post.date}} </br> <hr>
+            {% include "includes/post.html" with post=post show_detail_link=True %}
 
-    {% include "includes/post.html" with post=post show_detail_link=True %}
-
-{%endfor%}
-
- {%endblock%}
+        {%endfor%}
+    </div>
+{%endblock%}
