@@ -19,7 +19,7 @@
             {%endif%}
             <div>
 
-                <a class="flex items-center" href="#">
+                <a class="flex items-center" href="{% url 'profiles:detail' post.author.username%}">
 
                     {%thumbnail post.author.profile.image "373x373" crop="center" as im%}
 
