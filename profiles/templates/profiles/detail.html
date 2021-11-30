@@ -16,12 +16,16 @@
             <img class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block" src="{{im.url}}" alt="avatar">
         {%endthumbnail%}
 
-        <button class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
-          <span class="mr-2">Follow</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-          </svg>
-      </button>
+        {% if request.user.is_authenticated %}
+          {% if request.user != user %}
+            <button class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center" type = "button" data-username = "{{user.username}}">
+              <span class="mr-2 js-follow-text">Follow</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+              </svg>
+            </button>
+          {% endif %}
+        {% endif %}
     </div>
 	<div class="text-center px-3 pb-6 pt-2">
 		<h3 class="text-white text-sm bold font-sans">{{user.username}}</h3>
