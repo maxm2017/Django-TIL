@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, UserManager
 from django.http.response import HttpResponseBadRequest, JsonResponse
-from django.http import HttpRequest
+from django.http import HttpRequest, request
 from django.views.generic import DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from followers.models import Follower
@@ -15,11 +15,20 @@ class ProfileDetailView(DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         user = self.get_object()
         context = super().get_context_data(**kwargs)
-        context['total_posts'] = Post.objects.filter(author=user).count
+        context['total_posts'] = Post.objects.filter(author=user).count()
+
+        if self.request.user.is_authenticated:
+            context['you_follow'] = Follower.objects.filter(following=user,followed_by=self.request.user).exists()
+
         return context
+
 
 class FollowView(LoginRequiredMixin, View):
     http_method_names = ["post"]
